@@ -1,4 +1,4 @@
-package com.itheima.control;
+package com.itheima.web.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,12 +12,16 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        1.获取请求的用户名
         String username = request.getParameter("username");
+        System.out.println(username);
 
 //        2.获取HTTPsession对象
         HttpSession session = request.getSession();
 
 //            3.将用户名信息添加到共享信息
         session.setAttribute("username",username);
+        //跳转页面
+        request.getRequestDispatcher("/pages/home/main.jsp").forward(request,response);
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.itheima.filter;
+package com.itheima.web.Filter;
 
 
 import java.io.IOException;
@@ -24,9 +24,6 @@ import javax.servlet.http.HttpSession;
         /**
          * Default constructor.
          */
-        public LoginFilter() {
-
-        }
 
         /**
          * @see Filter#destroy()
