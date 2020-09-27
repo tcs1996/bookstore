@@ -44,8 +44,8 @@
     <!--配置全字段更新-->
     <update id="update" parameterType="com.itheima.domain.User">
         update user
-        set name = #{username,jdbcType=VARCHAR},
-        password = #{city,jdbcType=VARCHAR}
+        set username = #{username,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 

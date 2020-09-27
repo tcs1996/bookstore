@@ -3,7 +3,7 @@ package com.itheima.service.impl;
 import com.github.pagehelper.PageInfo;
 import com.itheima.dao.UserDao;
 import com.itheima.domain.User;
-import com.itheima.service.Userservice;
+import com.itheima.service.UserService;
 import com.itheima.utils.MapperFactory;
 import com.itheima.utils.TransactionUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -11,7 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 import java.util.Random;
 
-public class UserServiceImpl implements Userservice {
+public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         SqlSession sqlSession = null;

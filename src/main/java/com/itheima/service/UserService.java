@@ -5,7 +5,7 @@ import com.itheima.domain.User;
 
 import java.util.List;
 
-public interface Userservice {
+public interface UserService {
 
     /*
     * 新增数据
