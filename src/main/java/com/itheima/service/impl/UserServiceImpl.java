@@ -1,5 +1,5 @@
 package com.itheima.service.impl;
-
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itheima.dao.UserDao;
 import com.itheima.domain.User;
@@ -9,7 +9,6 @@ import com.itheima.utils.TransactionUtil;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
-import java.util.Random;
 
 public class UserServiceImpl implements UserService {
     @Override
@@ -39,22 +38,117 @@ public class UserServiceImpl implements UserService {
     }
 
     public void delete(User user) {
-
+        SqlSession sqlSession = null;
+        try{
+            //1.获取SqlSession
+            sqlSession = MapperFactory.getSqlSession();
+            //2.获取Dao
+            UserDao userDao = MapperFactory.getMapper(sqlSession,UserDao.class);
+            //3.调用Dao层操作
+            userDao.delete(user);
+            //4.提交事务
+            TransactionUtil.commit(sqlSession);
+        }catch (Exception e){
+            TransactionUtil.rollback(sqlSession);
+            throw new RuntimeException(e);
+            //记录日志
+        }finally {
+            try {
+                TransactionUtil.close(sqlSession);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     public void update(User user) {
-
+        SqlSession sqlSession = null;
+        try{
+            //1.获取SqlSession
+            sqlSession = MapperFactory.getSqlSession();
+            //2.获取Dao
+            UserDao userDao = MapperFactory.getMapper(sqlSession,UserDao.class);
+            //3.调用Dao层操作
+            userDao.update(user);
+            //4.提交事务
+            TransactionUtil.commit(sqlSession);
+        }catch (Exception e){
+            TransactionUtil.rollback(sqlSession);
+            throw new RuntimeException(e);
+            //记录日志
+        }finally {
+            try {
+                TransactionUtil.close(sqlSession);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
-
+    @Override
     public User findById(Integer id) {
-        return null;
+        SqlSession sqlSession = null;
+        try{
+            //1.获取SqlSession
+            sqlSession = MapperFactory.getSqlSession();
+            //2.获取Dao
+            UserDao userDao = MapperFactory.getMapper(sqlSession,UserDao.class);
+            //3.调用Dao层操作
+            return userDao.findById(id);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+            //记录日志
+        }finally {
+            try {
+                TransactionUtil.close(sqlSession);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     public List<User> findAll() {
-        return null;
+        SqlSession sqlSession = null;
+        try{
+            //1.获取SqlSession
+            sqlSession = MapperFactory.getSqlSession();
+            //2.获取Dao
+            UserDao userDao = MapperFactory.getMapper(sqlSession,UserDao.class);
+            //3.调用Dao层操作
+            return userDao.findAll();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+            //记录日志
+        }finally {
+            try {
+                TransactionUtil.close(sqlSession);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     public PageInfo finAll(int page, int size) {
-        return null;
+
+        SqlSession sqlSession = null;
+        try{
+            //1.获取SqlSession
+            sqlSession = MapperFactory.getSqlSession();
+            //2.获取Dao
+            UserDao userDao = MapperFactory.getMapper(sqlSession,UserDao.class);
+            //3.调用Dao层操作
+            PageHelper.startPage(page,size);
+            List<User> all = userDao.findAll();
+            PageInfo pageInfo = new PageInfo(all);
+            return pageInfo;
+        }catch (Exception e){
+            throw new RuntimeException(e);
+            //记录日志
+        }finally {
+            try {
+                TransactionUtil.close(sqlSession);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }
