@@ -99,6 +99,7 @@
                                         <c:when test="${o.type eq '1'}">单选</c:when>
                                         <c:when test="${o.type eq '2'}">多选</c:when>
                                         <c:when test="${o.type eq '3'}">简答</c:when>
+                                        <c:when test="${o.type eq '4'}">简必答</c:when>
                                     </c:choose>
                                 </td>
                                 <td>
