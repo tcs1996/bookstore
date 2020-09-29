@@ -29,7 +29,7 @@
     <div class="login-box-body">
         <p class="login-box-msg">登录系统</p>
       
-        <form action="${pageContext.request.contextPath}/UserServlet" method="post">
+        <form action="${pageContext.request.contextPath}/UserServlet" method="get">
             <div class="form-group has-feedback">
                 <input type="text" name="username" class="form-control"  value="zs">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

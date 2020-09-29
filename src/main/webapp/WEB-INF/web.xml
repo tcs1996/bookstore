@@ -7,10 +7,18 @@
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>com.itheima.web.controller.UserServlet</servlet-class>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/UserServlet</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>bookServlet</servlet-name>
+        <servlet-class>com.itheima.web.controller.BooksServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>bookServlet</servlet-name>
+        <url-pattern>/bookServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
