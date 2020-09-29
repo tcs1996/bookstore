@@ -39,6 +39,15 @@ public class UserDemoTest {
         System.out.println(all);
 
     }
+
+    @Test
+    public void findUserName(){
+        User user = new User();
+        user.setUsername("123");
+        User user1 = userService.findByUsername(user.getUsername());
+        System.out.println(user1);
+//        System.out.println(user1.getPassword()+user1.getUsername());
+    }
     @AfterClass
     public static void destory(){
         userService = null;

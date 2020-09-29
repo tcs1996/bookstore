@@ -29,6 +29,13 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <!--配置根据username查询-->
+    <select id="findByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where username =#{username,jdbcType=VARCHAR}
+    </select>
     <!--配置根据id删除-->
     <delete id="delete" parameterType="java.lang.Integer">
         delete from user where id = #{id,jdbcType=INTEGER}

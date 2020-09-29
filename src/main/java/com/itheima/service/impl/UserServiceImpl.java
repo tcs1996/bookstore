@@ -11,7 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    @Override
+
     public void save(User user) {
         SqlSession sqlSession = null;
         try {
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
-    @Override
+
     public User findById(Integer id) {
         SqlSession sqlSession = null;
         try{
@@ -94,6 +94,28 @@ public class UserServiceImpl implements UserService {
             UserDao userDao = MapperFactory.getMapper(sqlSession,UserDao.class);
             //3.调用Dao层操作
             return userDao.findById(id);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+            //记录日志
+        }finally {
+            try {
+                TransactionUtil.close(sqlSession);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public User findByUsername(String username){
+        SqlSession sqlSession = null;
+        try{
+            //1.获取SqlSession
+            sqlSession = MapperFactory.getSqlSession();
+            //2.获取Dao
+            UserDao userDao = MapperFactory.getMapper(sqlSession,UserDao.class);
+            //3.调用Dao层操作
+            return userDao.findByUsername(username);
         }catch (Exception e){
             throw new RuntimeException(e);
             //记录日志

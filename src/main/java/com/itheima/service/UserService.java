@@ -22,6 +22,12 @@ public interface UserService {
     * param ID  查询条件（id）
     * return 查询结果，单个对象*/
     User findById(Integer id );
+
+    /*
+     * 查询单个：
+     * param ID  查询条件（username）
+     * return 查询结果，单个对象*/
+    User findByUsername(String username);
     /*查询全部数据
     * return 全部数据的列表对象*/
     List<User> findAll();
