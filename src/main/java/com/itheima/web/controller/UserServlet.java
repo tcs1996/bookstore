@@ -23,7 +23,6 @@ public class UserServlet extends HttpServlet {
         User user = new User();
         user.setPassword(password);
         user.setUsername(username);
-        System.out.println(username);
         UserServiceImpl userService = new UserServiceImpl();
 //        2.获取HTTPsession对象
         HttpSession session = request.getSession();
@@ -37,6 +36,7 @@ public class UserServlet extends HttpServlet {
         request.getRequestDispatcher("login.jsp").forward(request,response);
         }
         else if (username.equals(userService.findByUsername(username).getUsername())&& password.equals(userService.findByUsername(username).getPassword())){
+            //将用户名信息添加到共享信息
             session.setAttribute("user",user);
             request.getRequestDispatcher("/pages/home/main.jsp").forward(request,response);
         }else {
@@ -46,17 +46,6 @@ public class UserServlet extends HttpServlet {
             //跳转页面
             request.getRequestDispatcher("login.jsp").forward(request,response);
         }
-//        if ("list".equals(userService.findByUsername(username).getUsername())){
-//
-//        }
-
-
-
-
-////            3.将用户名信息添加到共享信息
-//        session.setAttribute("user",user);
-
-
     }
 
     @Override

@@ -23,32 +23,21 @@ public class BooksServlet extends HttpServlet {
         String operation = request.getParameter("operation");
 
 
-        if ("list".equals(operation)){
-            this.list(request,response);
-        }else if ("toEdit".equals(operation)){
-            this.toEdit(request,response);
-        }else if("edit".equals(operation)){
+        if ("list".equals(operation)) {
+            this.list(request, response);
+        } else if ("toEdit".equals(operation)) {
+            this.toEdit(request, response);
+        } else if ("edit".equals(operation)) {
 
-                this.edit(request,response);
+            this.edit(request, response);
 
-        }else if ("list".equals(operation)){
-
-        }else if ("list".equals(operation)){
-
-        }else if ("list".equals(operation)){
-
-        }else if ("list".equals(operation)){
-
-        }else if ("list".equals(operation)){
-
+        } else if  ("delete".equals(operation)){
+                this.delete(request,response);
         }
     }
 
 
-
-
-
-    private void list(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+    private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //进入列表页
         //获取数据
         int page = 1;
@@ -57,12 +46,10 @@ public class BooksServlet extends HttpServlet {
 //
 //            }
         PageInfo all = booksService.finAll(page, size);
-        System.out.println(4564);
         //将数据保存到指定的位置
-        request.setAttribute("page",all);
-        System.out.println(123);
+        request.setAttribute("page", all);
         //跳转页面
-        request.getRequestDispatcher("WEB-INF/pages/store/book/list.jsp").forward(request,response);
+        request.getRequestDispatcher("WEB-INF/pages/store/book/list.jsp").forward(request, response);
     }
 
 
@@ -73,27 +60,23 @@ public class BooksServlet extends HttpServlet {
         String id1 = request.getParameter("id");
         System.out.println(id1);
 
-        if (id1 !=null){
+        if (id1 != null) {
             id = Integer.valueOf(id1);
             //获取数据
-//                booksService.findById(id);
             //        判断ID是否存在
-            if (booksService.findById(id)==null){
-                String error ="该书不存在";
-                session.setAttribute("error",error);
+            if (booksService.findById(id) == null) {
+                String error = "该书不存在";
+                session.setAttribute("error", error);
                 System.out.println(error);
                 //跳转页面
-                request.getRequestDispatcher("login.jsp").forward(request,response);
-            }
-            else {
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            } else {
                 booksService.findById(id);
                 Books book = booksService.findById(id);
-                session.setAttribute("book",book);
+                session.setAttribute("book", book);
                 //跳转页面
-                request.getRequestDispatcher("WEB-INF/pages/store/book/update.jsp").forward(request,response);
+                request.getRequestDispatcher("WEB-INF/pages/store/book/update.jsp").forward(request, response);
             }
-        }else {
-            System.out.println("没有ID相关处理");
         }
 
     }
@@ -101,47 +84,40 @@ public class BooksServlet extends HttpServlet {
     private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //        2.获取HTTPsession对象
         HttpSession session = request.getSession();
-        String id = request.getParameter("id");
-        System.out.println(id);
-        String name = request.getParameter("name");
-        System.out.println(name);
-        String price = request.getParameter("price");
-        System.out.println(price);
-        String pnum = request.getParameter("pnum");
-        System.out.println(pnum);
-        String category = request.getParameter("category");
-        System.out.println(category);
-
+        //获取前端返回参数
+        Integer id = null;
+        id = Integer.valueOf(request.getParameter("id"));
+        String name = null;
+        name = request.getParameter("name");
+        Double price = 0.0;
+        price = Double.valueOf(request.getParameter("price"));
+        Integer pnum = null;
+        pnum = Integer.valueOf(request.getParameter("pnum"));
+        String category = null;
+        category = request.getParameter("category");
+        //赋值给book对象
         Books books = new Books();
-
+        books.setId(id);
+        books.setName(name);
+        books.setPrice(price);
+        books.setPnum(pnum);
+        books.setCategory(category);
         booksService.update(books);
-
-        //跳转页面
-        request.getRequestDispatcher("WEB-INF/pages/store/book/list.jsp").forward(request,response);
-
-//        if (id1 !=null){
-//            id = Integer.valueOf(id1);
-//            //获取数据
-////                booksService.findById(id);
-//            //        判断ID是否存在
-//            if (booksService.findById(id)==null){
-//                String error ="该书不存在";
-//                session.setAttribute("error",error);
-//                System.out.println(error);
-//                //跳转页面
-//                request.getRequestDispatcher("login.jsp").forward(request,response);
-//            }
-//            else {
-//                booksService.findById(id);
-//                Books book = booksService.findById(id);
-//                session.setAttribute("book",book);
-//                //跳转页面
-//                request.getRequestDispatcher("WEB-INF/pages/store/book/update.jsp").forward(request,response);
-//            }
-//        }else {
-//            System.out.println("没有ID相关处理");
-//        }
-
+        //调用列表方法
+        list(request, response);
+    }
+    private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer id = null;
+        id = Integer.valueOf(request.getParameter("id"));
+        Books books = new Books();
+       if (booksService.findById(id)==null){
+           System.out.println("该图书不存在");
+       }else {
+           books = booksService.findById(id);
+           booksService.delete(books);
+           //调用列表方法
+           list(request, response);
+       }
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

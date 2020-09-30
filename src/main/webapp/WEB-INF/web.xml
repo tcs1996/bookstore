@@ -21,4 +21,12 @@
         <servlet-name>bookServlet</servlet-name>
         <url-pattern>/bookServlet</url-pattern>
     </servlet-mapping>
+    <filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>com.itheima.web.Filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
 </web-app>

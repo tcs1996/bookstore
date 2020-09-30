@@ -44,17 +44,13 @@ import javax.servlet.http.HttpSession;
             if(isContain(path,uri)){
                 chain.doFilter(request, response);
             }else{
-                if(session.getAttribute("userInfo") == null){//判断用户 session 是否失效
-                    //session.invalidate();
-                    if (request.getHeader("x-requested-with") != null&& request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")){//如果是ajax请求响应头会有，x-requested-with；
-                        System.out.println("session timeout,please login again.");
-                        response.setHeader("sessionstatus", "timeout");//在响应头设置session状态
-                        response.getWriter().print("timeout"); //打印一个返回值，没这一行，在tabs页中无法跳出（导航栏能跳出），具体原因不明
-                    }else{//普通请求session 超时处理
-                        request.getSession().setAttribute("goUrl", request.getRequestURL()+"?"+ request.getQueryString());//记录登陆之前的请求地址
-                        System.out.println("session timeout,please login again."+"===="+request.getRequestURI() );
-                        response.sendRedirect(request.getContextPath()+"/login.jsp");//将jsp重定向到新的jsp或servlet请求
-                    }
+                if(session.getAttribute("user") == null){//判断用户 session 是否失效
+                    String error ="您尚未登录，请先登录";
+                    session.setAttribute("error",error);
+                    System.out.println(error);
+                    //跳转页面
+                    request.getRequestDispatcher("login.jsp").forward(request,response);
+
                 }else{
                     chain.doFilter(request, response);
                 }
@@ -72,7 +68,7 @@ import javax.servlet.http.HttpSession;
         //判断过滤器中是否包含uri中。
         private boolean isContain(String PATH,String uri){
             List<String> uriList = new ArrayList<String>();
-            uriList.add("/manage.jsp");
+            uriList.add("/login.jsp");
             Iterator<String> iterator = uriList.iterator() ;
             while(iterator.hasNext()){
                 String suri = (String)iterator.next() ;

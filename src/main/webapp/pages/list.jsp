@@ -102,7 +102,7 @@
 
             <div class="box-footer">
                 <jsp:include page="common/page.jsp">
-                    <jsp:param value="${ctx}/book?method=findPage" name="pageUrl"/>
+                    <jsp:param value="${ctx}/bookServlet?operation=list" name="pageUrl"/>
                 </jsp:include>
             </div>
             <!-- /.box-footer-->
